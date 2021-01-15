@@ -19,6 +19,7 @@ export default {}
   position: fixed;
   top: 0;
   color: #fff;
+  z-index: 999;
   background:rgba(255, 255,255,.5);
   .wrapper{
       height: 100%;

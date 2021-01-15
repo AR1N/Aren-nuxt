@@ -27,7 +27,7 @@ export default defineComponent({
                     timer = setTimeout(() => {
                         setImg()
                          flag = false
-                    }, 1000);
+                    }, 300);
                 }
             })
         })
@@ -59,12 +59,19 @@ export default defineComponent({
         height: 100vh;
         width: 100vw;
         overflow: hidden;
-        // background: url('/img/cover_bg.jpg') 100% 100% no-repeat;
-        // background-size: cover;
-        // object-fit: cover;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         #poster {
-            width: 100%;
-            object-fit: contain;
+            width: auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            object-fit: cover;
         }
     }
 }
