@@ -1,69 +1,71 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        nuxt {{message}}
-      </h1>
-
+    <div class="container">
+        <div class="cover">
+            <img id="poster" src="/img/cover_bg.jpg" alt="bg" />
+        </div>
+        <!-- <div>
+            <h1 class="title">nuxt {{ message }}</h1>
+        </div> -->
     </div>
-  </div>
 </template>
 
 <script lang="ts">
-
-import { defineComponent, ref } from '@vue/composition-api'
-
+import { defineComponent, onMounted, onUnmounted, ref } from '@vue/composition-api'
+// import Parallax from 'parallax'
 
 export default defineComponent({
-  setup () {
-    const message = ref('This is a message')
+    setup() {
+        const message = ref('This is a message')
+        let flag = false
+        let timer = null
 
-    return {
-      message
-    }
-  }
+        onMounted(()=>{
+            setImg()
+            window.addEventListener('resize',()=>{
+                if(!flag){
+                    flag = true
+                    timer = setTimeout(() => {
+                        setImg()
+                         flag = false
+                    }, 1000);
+                }
+            })
+        })
+        onUnmounted(()=>{
+            window.removeEventListener('resize',()=>{})
+        })
+       function setImg(){
+           let boxH = document.documentElement.clientHeight
+		   let boxW = document.documentElement.clientWidth
+           let ratio = 1080 / 1920
+			const compute = boxH / boxW > ratio;
+			let width = compute ? (boxH / ratio + 'px') : `${boxW}px`
+            let height = compute ? `${boxH}px` : (boxW * ratio + 'px')
+            let poster:HTMLElement = document.getElementById('poster') as HTMLElement
+            poster.style.width = width
+            poster.style.height = height
+            console.log(width,height)
+       }
+        return {
+            message,
+        }
+    },
 })
-
 </script>
 
-<style>
+<style lang="scss" scoped>
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+    .cover {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        // background: url('/img/cover_bg.jpg') 100% 100% no-repeat;
+        // background-size: cover;
+        // object-fit: cover;
+        #poster {
+            width: 100%;
+            object-fit: contain;
+        }
+    }
 }
 </style>
