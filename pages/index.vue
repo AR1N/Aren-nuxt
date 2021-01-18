@@ -27,6 +27,7 @@ export default defineComponent({
                     timer = setTimeout(() => {
                         setImg()
                          flag = false
+                         timer = null
                     }, 300);
                 }
             })
@@ -44,7 +45,7 @@ export default defineComponent({
             let poster:HTMLElement = document.getElementById('poster') as HTMLElement
             poster.style.width = width
             poster.style.height = height
-            console.log(width,height)
+            // console.log(width,height)
        }
         return {
             message,
@@ -65,12 +66,6 @@ export default defineComponent({
         justify-content: center;
         #poster {
             width: auto;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            margin: auto;
             object-fit: cover;
         }
     }
